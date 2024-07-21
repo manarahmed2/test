@@ -3,7 +3,7 @@ class Player {
   final String name;
   final String number;
   final String country;
-  final String image;
+  final String imageUrl;
   final String type;
   final String age;
   final String yellowCards;
@@ -16,7 +16,7 @@ class Player {
     required this.name,
     required this.number,
     required this.country,
-    required this.image,
+    required this.imageUrl,
     required this.type,
     required this.age,
     required this.yellowCards,
@@ -27,17 +27,17 @@ class Player {
 
   factory Player.fromJson(Map<String, dynamic> json) {
     return Player(
-      id: json['player_id'] ?? 0,
+      id: json['player_key'] ?? 0,
       name: json['player_name'] ?? '',
       number: json['player_number'] ?? '',
       country: json['player_country'] ?? '',
-      image: json['player_image'] ?? '',
+      imageUrl: json['player_image'] ?? '',
       type: json['player_type'] ?? '',
       age: json['player_age'] ?? '',
-      yellowCards: json['yellow_cards'] ?? '',
-      redCards: json['red_cards'] ?? '',
-      goals: json['goals'] ?? '',
-      assists: json['assists'] ?? '',
+      yellowCards: json['player_yellow_cards'] ?? '',
+      redCards: json['player_red_cards'] ?? '',
+      goals: json['player_goals'] ?? '',
+      assists: json['player_assists'] ?? '',
     );
   }
 }

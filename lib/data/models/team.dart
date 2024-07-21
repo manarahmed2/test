@@ -5,10 +5,10 @@ class AutoGenerate {
   });
   late final int success;
   late final List<Team> result;
-  
+
   AutoGenerate.fromJson(Map<String, dynamic> json){
-    success = json['success'];
-    result = List.from(json['result']).map((e) => Team.fromJson(e)).toList();
+    success = json['success'] ?? 0;
+    result = List.from(json['result'] ?? []).map((e) => Team.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -32,13 +32,13 @@ class Team {
   late final String? teamLogo;
   late final List<Players> players;
   late final List<Coaches> coaches;
-  
+
   Team.fromJson(Map<String, dynamic> json){
-    teamKey = json['team_key'];
-    teamName = json['team_name'];
-    teamLogo = json['team_logo'];
-    players = List.from(json['players']).map((e) => Players.fromJson(e)).toList();
-    coaches = List.from(json['coaches']).map((e) => Coaches.fromJson(e)).toList();
+    teamKey = json['team_key'] ?? 0;
+    teamName = json['team_name'] ?? '';
+    teamLogo = json['team_logo'] ?? '';
+    players = List.from(json['players'] ?? []).map((e) => Players.fromJson(e)).toList();
+    coaches = List.from(json['coaches'] ?? []).map((e) => Coaches.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -137,49 +137,49 @@ class Players {
   late final String playerKeyPasses;
   late final String playerWoordworks;
   late final String playerRating;
-  
+
   Players.fromJson(Map<String, dynamic> json){
-    playerKey = json['player_key'];
-    playerImage = json['player_image'];
-    playerName = json['player_name'];
-    playerNumber = json['player_number'];
-    playerCountry = json['player_country'];
-    playerType = json['player_type'];
-    playerAge = json['player_age'];
-    playerMatchPlayed = json['player_match_played'];
-    playerGoals = json['player_goals'];
-    playerYellowCards = json['player_yellow_cards'];
-    playerRedCards = json['player_red_cards'];
-    playerInjured = json['player_injured'];
-    playerSubstituteOut = json['player_substitute_out'];
-    playerSubstitutesOnBench = json['player_substitutes_on_bench'];
-    playerAssists = json['player_assists'];
-    playerBirthdate = json['player_birthdate'];
-    playerIsCaptain = json['player_is_captain'];
-    playerShotsTotal = json['player_shots_total'];
-    playerGoalsConceded = json['player_goals_conceded'];
-    playerFoulsCommitted = json['player_fouls_committed'];
-    playerTackles = json['player_tackles'];
-    playerBlocks = json['player_blocks'];
-    playerCrossesTotal = json['player_crosses_total'];
-    playerInterceptions = json['player_interceptions'];
-    playerClearances = json['player_clearances'];
-    playerDispossesed = json['player_dispossesed'];
-    playerSaves = json['player_saves'];
-    playerInsideBoxSaves = json['player_inside_box_saves'];
-    playerDuelsTotal = json['player_duels_total'];
-    playerDuelsWon = json['player_duels_won'];
-    playerDribbleAttempts = json['player_dribble_attempts'];
-    playerDribbleSucc = json['player_dribble_succ'];
-    playerPenComm = json['player_pen_comm'];
-    playerPenWon = json['player_pen_won'];
-    playerPenScored = json['player_pen_scored'];
-    playerPenMissed = json['player_pen_missed'];
-    playerPasses = json['player_passes'];
-    playerPassesAccuracy = json['player_passes_accuracy'];
-    playerKeyPasses = json['player_key_passes'];
-    playerWoordworks = json['player_woordworks'];
-    playerRating = json['player_rating'];
+    playerKey = json['player_key'] ?? 0;
+    playerImage = json['player_image'] ?? '';
+    playerName = json['player_name'] ?? '';
+    playerNumber = json['player_number'] ?? '';
+    playerCountry = json['player_country'] ?? '';
+    playerType = json['player_type'] ?? '';
+    playerAge = json['player_age'] ?? '';
+    playerMatchPlayed = json['player_match_played'] ?? '';
+    playerGoals = json['player_goals'] ?? '';
+    playerYellowCards = json['player_yellow_cards'] ?? '';
+    playerRedCards = json['player_red_cards'] ?? '';
+    playerInjured = json['player_injured'] ?? '';
+    playerSubstituteOut = json['player_substitute_out'] ?? '';
+    playerSubstitutesOnBench = json['player_substitutes_on_bench'] ?? '';
+    playerAssists = json['player_assists'] ?? '';
+    playerBirthdate = json['player_birthdate'] ?? '';
+    playerIsCaptain = json['player_is_captain'] ?? '';
+    playerShotsTotal = json['player_shots_total'] ?? '';
+    playerGoalsConceded = json['player_goals_conceded'] ?? '';
+    playerFoulsCommitted = json['player_fouls_committed'] ?? '';
+    playerTackles = json['player_tackles'] ?? '';
+    playerBlocks = json['player_blocks'] ?? '';
+    playerCrossesTotal = json['player_crosses_total'] ?? '';
+    playerInterceptions = json['player_interceptions'] ?? '';
+    playerClearances = json['player_clearances'] ?? '';
+    playerDispossesed = json['player_dispossesed'] ?? '';
+    playerSaves = json['player_saves'] ?? '';
+    playerInsideBoxSaves = json['player_inside_box_saves'] ?? '';
+    playerDuelsTotal = json['player_duels_total'] ?? '';
+    playerDuelsWon = json['player_duels_won'] ?? '';
+    playerDribbleAttempts = json['player_dribble_attempts'] ?? '';
+    playerDribbleSucc = json['player_dribble_succ'] ?? '';
+    playerPenComm = json['player_pen_comm'] ?? '';
+    playerPenWon = json['player_pen_won'] ?? '';
+    playerPenScored = json['player_pen_scored'] ?? '';
+    playerPenMissed = json['player_pen_missed'] ?? '';
+    playerPasses = json['player_passes'] ?? '';
+    playerPassesAccuracy = json['player_passes_accuracy'] ?? '';
+    playerKeyPasses = json['player_key_passes'] ?? '';
+    playerWoordworks = json['player_woordworks'] ?? '';
+    playerRating = json['player_rating'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -234,9 +234,9 @@ class Coaches {
     required this.coachName,
   });
   late final String coachName;
-  
+
   Coaches.fromJson(Map<String, dynamic> json){
-    coachName = json['coach_name'];
+    coachName = json['coach_name'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

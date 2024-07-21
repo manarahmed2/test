@@ -1,118 +1,74 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/team_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sports_app/cubits/teams_cubit.dart';
+import 'package:sports_app/data/repositories/team_repository.dart';
 
-class TeamsScreen extends StatefulWidget {
-  @override
-  _TeamsScreenState createState() => _TeamsScreenState();
-}
+class TeamsScreen extends StatelessWidget {
+  final int leagueId;
 
-class _TeamsScreenState extends State<TeamsScreen> {
-  final _searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _loadTeams();
-  }
-
-  void _loadTeams() async {
-    try {
-      // الحصول على defaultLeagueId من TeamProvider
-      final teamProvider = Provider.of<TeamProvider>(context, listen: false);
-      await teamProvider.fetchLeagueTeams(teamProvider.defaultLeagueId);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load teams: $e')),
-      );
-    }
-  }
-
-  void _searchTeam() {
-    final searchQuery = _searchController.text.trim();
-    if (searchQuery.isNotEmpty) {
-      Provider.of<TeamProvider>(context, listen: false).searchTeam(searchQuery);
-    } else {
-      _loadTeams();
-    }
-  }
+  TeamsScreen({required this.leagueId});
 
   @override
   Widget build(BuildContext context) {
-    final teamProvider = Provider.of<TeamProvider>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Teams'),
-        backgroundColor: Colors.amber,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                fillColor: Colors.amber,
-                labelText: 'Search for a team',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+    return BlocProvider(
+      create: (context) => TeamsCubit(TeamsRepository(Dio()), leagueId)..fetchTeams(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Teams'),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Search Team',
+                  border: OutlineInputBorder(),
                 ),
+                onChanged: (query) {
+                  context.read<TeamsCubit>().searchTeams(query);
+                },
               ),
-              onChanged: (_) => _searchTeam(),
             ),
-          ),
-          Expanded(
-            child: teamProvider.teams.isEmpty
-                ? Center(child: Text('No teams found'))
-                : GridView.builder(
-                    padding: EdgeInsets.all(16.0),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10.0,
-                      crossAxisSpacing: 10.0,
-                      childAspectRatio: 1.0,
-                    ),
-                    itemCount: teamProvider.teams.length,
-                    itemBuilder: (context, index) {
-                      final team = teamProvider.teams[index];
-                      return Card(
-                        elevation: 3.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            // Handle team tap action
-                          },
+            Expanded(
+              child: BlocBuilder<TeamsCubit, TeamsState>(
+                builder: (context, state) {
+                  if (state is TeamsLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is TeamsLoaded) {
+                    if (state.teams.isEmpty) {
+                      return const Center(child: Text('No teams found'));
+                    }
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                      ),
+                      itemCount: state.teams.length,
+                      itemBuilder: (context, index) {
+                        final team = state.teams[index];
+                        return Card(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.network(
-                                team.teamLogo ?? '',
-                                height: 80.0,
-                                width: 80.0,
-                                fit: BoxFit.contain,
-                              ),
-                              SizedBox(height: 8.0),
-                              Text(
-                                team.teamName ?? 'Unknown',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                              SizedBox(height: 4.0),
+                              Image.network(team.teamLogo ?? ''),
+                              Text(team.teamName ?? 'Unknown'),
                             ],
                           ),
-                        ),
-                      );
-                    },
-                  ),
-          ),
-        ],
+                        );
+                      },
+                    );
+                  } else if (state is TeamsError) {
+                    return Center(child: Text('Failed to load teams: ${state.message}'));
+                  } else {
+                    return const Center(child: Text('No data available'));
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
