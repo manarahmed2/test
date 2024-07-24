@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sports_app/data/repositories/player_repository.dart';
-import 'package:sports_app/cubits/player_cubit.dart'; // تأكد من تحديث المسار إذا لزم الأمر
-import 'package:sports_app/cubits/player_state.dart'; // تأكد من تحديث المسار إذا لزم الأمر
+import 'package:sports_app/data/cubits/player_cubit.dart'; // تأكد من تحديث المسار إذا لزم الأمر
+import 'package:sports_app/data/cubits/player_state.dart'; // تأكد من تحديث المسار إذا لزم الأمر
 import 'package:sports_app/widgets/player_search_field.dart';
 import 'package:sports_app/widgets/players_list.dart';
 import 'package:sports_app/widgets/players_app_bar.dart';

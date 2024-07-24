@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sports_app/cubits/OnboardingCubit.dart';
+import 'package:sports_app/data/cubits/OnboardingCubit.dart';
 import 'package:sports_app/widgets/Indicator_widget.dart';
 import 'package:sports_app/widgets/OnboardingPage_widget.dart';
 import 'package:sports_app/widgets/SkipButton_widget.dart';
