@@ -13,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToNextScreen() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 10), () {
       Navigator.of(context).pushReplacementNamed('/onboarding');
     });
   }
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/images/splash.jpg',
+            'assets/images/splash2.jpg',
             fit: BoxFit.cover,
           ),
           Container(
@@ -44,15 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Text(
-                'To begin, begin...',
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+             
             ),
           ),
         ],
