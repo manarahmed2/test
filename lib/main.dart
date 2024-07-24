@@ -2,11 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sports_app/data/cubits/OnboardingCubit.dart';
-import 'screens/player_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/onboarding_screen.dart';
-import 'data/repositories/player_repository.dart'; // تأكد من استيراد PlayerRepository
-import 'package:sports_app/data/cubits/player_cubit.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -17,7 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => PlayersCubit(PlayersRepository(Dio()),'78' )),
         BlocProvider(create: (context) => OnboardingCubit()), // إضافة OnboardingCubit
       ],
       child: MaterialApp(
@@ -27,8 +24,8 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => PlayersScreen(teamId: '141'), // تحديث إلى SplashScreen
-         //'/onboarding': (context) => OnboardingScreen(),
+          '/': (context) => SplashScreen(), // تحديث إلى SplashScreen
+         '/onboarding': (context) => OnboardingScreen(),
          // '/login': (context) => LoginScreen(),
          // '/home': (context) => HomeScreen(),
           // '/league': (context) => LeagueDetailsScreen(leagueId: '1'), 
